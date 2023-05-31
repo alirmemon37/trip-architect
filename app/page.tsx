@@ -1,41 +1,38 @@
 "use client";
 
 import { useUserStore } from "@/store/UserStore";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 export default function Home() {
-  const [user, getUser, logout] = useUserStore((state) => [
+  const [user, getUser, logout, userLoading] = useUserStore((state) => [
     state.user,
     state.getUser,
     state.logout,
+    state.userLoading,
   ]);
 
-  const [loading, setLoading] = useState(false);
-  
   const router = useRouter();
 
   useEffect(() => {
-    setLoading(true);
-    getUser();
-    setLoading(false);
+    getUser()
   }, [getUser]);
 
-  const handleLogout = () => {
-    logout();
-  };
-
   const redirectToLoginPage = () => {
-    router.push("/login");
+    if (!userLoading && !user) {
+      router.push("/login");
+      return;
+    }
+    router.push("/app");
   };
 
   return (
     <div className="flex flex-col items-center p-4">
       <h1 className="text-5xl md:text-7xl font-extrabold mb-10 text-center">
-        Trip Architect
+        Trip Architect 🛠️
       </h1>
-      {loading ? (
+      {userLoading ? (
         <>
           <Image
             src="/loader.svg"
@@ -57,22 +54,23 @@ export default function Home() {
               <p>Email: {user?.email}</p>
 
               <button
-                onClick={handleLogout}
+                onClick={() => logout()}
                 className="border-2 border-black px-8 py-3 rounded-full"
               >
                 Logout
               </button>
             </div>
           ) : (
-            <button
-              onClick={redirectToLoginPage}
-              className="border-2 border-black px-8 py-3 rounded-full"
-            >
-              Let&apos;s Travel
-            </button>
+            <> </>
           )}
         </>
       )}
+      <button
+        onClick={redirectToLoginPage}
+        className="mt-4 border-2 border-black px-8 py-3 rounded-full"
+      >
+        Let&apos;s Travel
+      </button>
     </div>
   );
 }

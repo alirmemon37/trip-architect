@@ -14,27 +14,20 @@ import React, {
 const Login: FC<{ setRegister: Dispatch<SetStateAction<boolean>> }> = ({
   setRegister,
 }) => {
-  const [user, setUser] = useUserStore((state) => [state.user, state.setUser]);
+  const setUserLoading = useUserStore((state) => state.setUserLoading);
 
   const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<any>("");
+  const [password, setPassword] = useState<string>("");
 
   const router = useRouter();
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
+      setUserLoading(true);
       await account.createEmailSession(email, password);
-      const userData = await account.get();
-      setUser({
-        ...user,
-        name: userData.name,
-        email: userData.email,
-        $createdAt: userData.$createdAt,
-        $id: userData.$id,
-        $updatedAt: userData.$updatedAt,
-      });
-      router.push("/");
+      setUserLoading(false);
+      router.push("/app");
     } catch (error) {
       console.log(error);
     }

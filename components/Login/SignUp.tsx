@@ -10,24 +10,25 @@ const SignUp: FC<{ setRegister: Dispatch<SetStateAction<boolean>> }> = ({
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const [user, setUser] = useUserStore((state) => [state.user, state.setUser]);
+  const [user, setUser, setUserLoading] = useUserStore((state) => [
+    state.user,
+    state.setUser,
+    state.setUserLoading,
+  ]);
+
+  console.log(user);
 
   const router = useRouter();
 
   const handleSignup = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
+      setUserLoading(true);
       const newUser = await account.create(ID.unique(), email, password, name);
       console.log(newUser);
-      setUser({
-        ...user,
-        name: newUser.name,
-        email: newUser.email,
-        $createdAt: newUser.$createdAt,
-        $id: newUser.$id,
-        $updatedAt: newUser.$updatedAt,
-      });
-      router.push("/");
+      await account.createEmailSession(email, password);
+      setUserLoading(false);
+      router.push("/app");
     } catch (error) {
       console.log(error);
     }
