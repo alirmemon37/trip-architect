@@ -1,6 +1,6 @@
-"use client";
+"use client"
 
-import React, { useState } from "react";
+import React from "react";
 import {
   MapIcon,
   GlobeAltIcon,
@@ -13,6 +13,7 @@ import {
   HomeIcon as HomeIconSolid,
   UserIcon as UserIconSolid,
 } from "@heroicons/react/24/solid";
+import { useAppViewStore } from "@/store/AppViewStore";
 
 const AppSidebarItem = ({
   name,
@@ -35,103 +36,122 @@ const AppSidebarItem = ({
 };
 
 const AppSidebar = () => {
-  const [isActive, setIsActive] = useState<string>("home");
+  const [view, setView] = useAppViewStore((state) => [
+    state.view,
+    state.setView,
+  ]);
 
   return (
     <>
       <aside
-        className={`hidden md:flex flex-col h-[calc(100vh-76px)] fixed top-[76px] bottom-0 left-0 p-1 w-[72px] shadow-lg`}
+        className={`hidden md:flex flex-col h-[calc(100vh-76px)] fixed top-[76px] bottom-0 left-0 p-1 w-[72px] shadow-lg z-50`}
       >
         <AppSidebarItem
           name="Home"
           Icon={() =>
-            isActive === "home" ? (
+            view === "home" ? (
               <HomeIconSolid className="w-6 h-6" />
             ) : (
               <HomeIcon className="w-6 h-6" />
             )
           }
-          onClick={() => setIsActive("home")}
+          onClick={() => {
+            setView("home");
+          }}
         />
         <AppSidebarItem
           name="Map"
           Icon={() =>
-            isActive === "map" ? (
+            view === "map" ? (
               <MapIconSolid className="w-6 h-6" />
             ) : (
               <MapIcon className="w-6 h-6" />
             )
           }
-          onClick={() => setIsActive("map")}
+          onClick={() => {
+            setView("map");
+          }}
         />
         <AppSidebarItem
           name="Places"
           Icon={() =>
-            isActive === "places" ? (
+            view === "places" ? (
               <GlobeAltIconSolid className="w-6 h-6" />
             ) : (
               <GlobeAltIcon className="w-6 h-6" />
             )
           }
-          onClick={() => setIsActive("places")}
+          onClick={() => {
+            setView("places");
+          }}
         />
         <AppSidebarItem
           name="Profile"
           Icon={() =>
-            isActive === "profile" ? (
+            view === "profile" ? (
               <UserIconSolid className="w-6 h-6" />
             ) : (
               <UserIcon className="w-6 h-6" />
             )
           }
-          onClick={() => setIsActive("profile")}
+          onClick={() => {
+            setView("profile");
+          }}
         />
       </aside>
 
-      <aside className="fixed bottom-0 w-full flex md:hidden flex-row justify-evenly items-center shadow-xl border-t-2 border-gray-100">
+      <aside className="fixed left-0 right-0 bottom-0 w-full flex md:hidden flex-row justify-evenly items-center shadow-xl border-t-2 border-gray-100 z-50">
         <AppSidebarItem
           name="Home"
           Icon={() =>
-            isActive === "home" ? (
+            view === "home" ? (
               <HomeIconSolid className="w-6 h-6" />
             ) : (
               <HomeIcon className="w-6 h-6" />
             )
           }
-          onClick={() => setIsActive("home")}
+          onClick={() => {
+            setView("home");
+          }}
         />
         <AppSidebarItem
           name="Map"
           Icon={() =>
-            isActive === "map" ? (
+            view === "map" ? (
               <MapIconSolid className="w-6 h-6" />
             ) : (
               <MapIcon className="w-6 h-6" />
             )
           }
-          onClick={() => setIsActive("map")}
+          onClick={() => {
+            setView("map");
+          }}
         />
         <AppSidebarItem
           name="Places"
           Icon={() =>
-            isActive === "places" ? (
+            view === "places" ? (
               <GlobeAltIconSolid className="w-6 h-6" />
             ) : (
               <GlobeAltIcon className="w-6 h-6" />
             )
           }
-          onClick={() => setIsActive("places")}
+          onClick={() => {
+            setView("places");
+          }}
         />
         <AppSidebarItem
           name="Profile"
           Icon={() =>
-            isActive === "profile" ? (
+            view === "profile" ? (
               <UserIconSolid className="w-6 h-6" />
             ) : (
               <UserIcon className="w-6 h-6" />
             )
           }
-          onClick={() => setIsActive("profile")}
+          onClick={() => {
+            setView("profile");
+          }}
         />
       </aside>
     </>

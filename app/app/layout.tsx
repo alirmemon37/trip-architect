@@ -8,18 +8,26 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
-  const [user, getUser, userLoading] = useUserStore((state) => [state.user, state.getUser, state.userLoading]);
+  const [user, getUser, userLoading] = useUserStore((state) => [
+    state.user,
+    state.getUser,
+    state.userLoading,
+  ]);
   const router = useRouter();
 
   useEffect(() => {
-    getUser()
-  }, [getUser]);
+    const fetchUser = async () => {
+      await getUser();
 
-  useEffect(() => {
-    if (!userLoading && !user) {
-      router.push("/login");
-    }
-  }, [user])
+      const { user } = useUserStore.getState();
+
+      if (!user) {
+        router.replace("/login");
+      }
+    };
+
+    fetchUser();
+  }, [getUser, router]);
 
   return (
     <>
@@ -29,11 +37,15 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           <div className="flex flex-row w-full">
             <AppSidebar />
 
-            <div className="pt-[76px] md:pl-[72px] flex-1">{children}</div>
+            <div className="pt-[76px] px-4 md:px-0 md:pl-[72px] flex-1">
+              {children}
+            </div>
           </div>
         </div>
-      ): (
-        <Image src="/loader.svg" alt="Loader" width={100} height={100} />
+      ) : (
+        <div className="h-screen w-full flex items-center justify-center">
+          <Image src="/loader.svg" alt="Loader" width={100} height={100} />
+        </div>
       )}
     </>
   );

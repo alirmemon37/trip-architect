@@ -16,7 +16,11 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    getUser()
+    const fetchUser = async () => {
+      await getUser();
+    };
+
+    fetchUser();
   }, [getUser]);
 
   const redirectToLoginPage = () => {
