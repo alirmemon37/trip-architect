@@ -74,8 +74,9 @@ export const useTripStore = create<TripStore>((set, get) => {
       } catch (error) {
         set({ trips: [] });
         console.log(error);
+      } finally {
+        set({ tripsLoading: false });
       }
-      set({ tripsLoading: false });
     },
   };
 });

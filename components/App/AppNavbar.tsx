@@ -7,12 +7,17 @@ import Avvvatars from "avvvatars-react";
 import { useAppViewStore } from "@/store/AppViewStore";
 import { Menu, Transition } from "@headlessui/react";
 import { useRouter } from "next/navigation";
+import { useCreateTripModalStore } from "@/store/CreateTripModalStore";
 
 const AppNavbar = () => {
   const [user, logout] = useUserStore((state) => [state.user, state.logout]);
-  const setView = useAppViewStore((state) => state.setView);
+  const [view, setView] = useAppViewStore((state) => [
+    state.view,
+    state.setView,
+  ]);
+  const openModal = useCreateTripModalStore((state) => state.openModal);
 
-  const router = useRouter()
+  const router = useRouter();
 
   return (
     <nav className="w-full flex flex-row items-center px-4 py-4 gap-4 fixed top-0 left-0 right-0 z-40 bg-gray-100">
@@ -36,7 +41,17 @@ const AppNavbar = () => {
             Search
           </button>
         </form>
-        <div onClick={() => setView("trips")} title="Create new Trip" className="p-2 hover:bg-white/50 rounded-full cursor-pointer transition-colors duration-300">
+        <div
+          onClick={() => {
+            if (view == "trips") {
+              openModal();
+              return;
+            }
+            setView("trips");
+          }}
+          title="Create new Trip"
+          className="p-2 hover:bg-white/50 rounded-full cursor-pointer transition-colors duration-300"
+        >
           <PlusIcon className="h-6 w-6 text-gray-700" />
         </div>
         <Menu as="div" className="relative inline-block">
@@ -68,8 +83,8 @@ const AppNavbar = () => {
                     {({ active }) => (
                       <button
                         onClick={() => {
-                          logout()
-                          router.push("/")
+                          logout();
+                          router.push("/");
                         }}
                         className={`${
                           active ? "bg-blue-500 text-white" : "text-gray-900"
