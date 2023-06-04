@@ -2,6 +2,7 @@
 
 import { account } from "@/appwrite";
 import { useUserStore } from "@/store/UserStore";
+import { AppwriteException } from "appwrite";
 import { useRouter } from "next/navigation";
 import React, {
   FC,
@@ -30,6 +31,10 @@ const Login: FC<{ setRegister: Dispatch<SetStateAction<boolean>> }> = ({
       router.push("/app");
     } catch (error) {
       console.log(error);
+      if (error instanceof AppwriteException) {
+        {/* @ts-ignore */}
+        alert(error.response.message)
+      }
     }
   };
 

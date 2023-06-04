@@ -1,5 +1,6 @@
 import { ID, account } from "@/appwrite";
 import { useUserStore } from "@/store/UserStore";
+import { AppwriteException } from "appwrite";
 import { useRouter } from "next/navigation";
 import { Dispatch, FC, FormEvent, SetStateAction, useState } from "react";
 
@@ -10,11 +11,7 @@ const SignUp: FC<{ setRegister: Dispatch<SetStateAction<boolean>> }> = ({
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const [user, setUser, setUserLoading] = useUserStore((state) => [
-    state.user,
-    state.setUser,
-    state.setUserLoading,
-  ]);
+  const setUserLoading = useUserStore((state) => state.setUserLoading);
 
   const router = useRouter();
 
@@ -28,6 +25,10 @@ const SignUp: FC<{ setRegister: Dispatch<SetStateAction<boolean>> }> = ({
       router.push("/app");
     } catch (error) {
       console.log(error);
+      if (error instanceof AppwriteException) {
+        {/* @ts-ignore */}
+        alert(error.response.message);
+      }
     }
   };
 

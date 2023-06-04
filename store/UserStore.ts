@@ -1,4 +1,5 @@
 import { account } from "@/appwrite";
+import { AppwriteException } from "appwrite";
 import { create } from "zustand";
 
 interface UserStore {
@@ -44,8 +45,13 @@ export const useUserStore = create<UserStore>((set) => {
       } catch (error) {
         set({ user: null });
         console.log(error);
+        if (error instanceof AppwriteException) {
+          {/* @ts-ignore */}
+          console.log(error.response.message);
+        }
+      } finally {
+        set({ userLoading: false });
       }
-      set({ userLoading: false });
     },
     userLoading: false,
     setUserLoading: (loading: boolean) => set(() => ({ userLoading: loading })),
