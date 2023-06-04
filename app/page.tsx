@@ -32,48 +32,22 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col items-center p-4">
+    <div className="relative flex flex-col items-center justify-center h-screen p-4">
       <h1 className="text-5xl md:text-7xl font-extrabold mb-10 text-center">
         Trip Architect 🛠️
       </h1>
-      {userLoading ? (
-        <>
-          <Image
-            src="/loader.svg"
-            alt="Loader"
-            width={30}
-            height={30}
-            priority
-          />
-        </>
-      ) : (
-        <>
-          {user ? (
-            <div className="flex flex-col gap-4 text-center">
-              <h3 className="text-lg md:text-2xl font-semibold">
-                User Details
-              </h3>
-
-              <p>Name: {user?.name}</p>
-              <p>Email: {user?.email}</p>
-
-              <button
-                onClick={() => logout()}
-                className="border-2 border-black px-8 py-3 rounded-full"
-              >
-                Logout
-              </button>
-            </div>
-          ) : (
-            <> </>
-          )}
-        </>
-      )}
+      <p className="text-gray-600 text-xl max-w-xl text-center mb-4">
+        Join the travel revolution with Trip Architect. Explore, connect, and
+        experience the world like never before.
+      </p>
       <button
         onClick={redirectToLoginPage}
-        className="mt-4 border-2 border-black px-8 py-3 rounded-full"
+        className="text-lg mt-4 border-2 border-white px-8 py-3 rounded-full bg-gradient-to-b from-blue-500 to-blue-700 hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 active:bg-blue-700 transition duration-300 text-white font-semibold"
       >
         Let&apos;s Travel
+        <span className="ml-2" role="img" aria-label="Globe">
+          🌏
+        </span>
       </button>
     </div>
   );
