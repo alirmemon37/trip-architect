@@ -23,8 +23,10 @@ export const useUserStore = create<UserStore>((set) => {
     user: null,
     setUser: (user: User) => set(() => ({ user: user })),
     logout: async () => {
+      set({ userLoading: true });
       await account.deleteSession("current");
       set({ user: null });
+      set({ userLoading: false });
     },
     getUser: async () => {
       set({ userLoading: true });
