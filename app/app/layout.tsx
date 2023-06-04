@@ -32,7 +32,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       {!userLoading && user ? (
-        <div>
+        <>
           <AppNavbar />
           <div className="flex flex-row w-full">
             <AppSidebar />
@@ -41,7 +41,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               {children}
             </div>
           </div>
-        </div>
+        </>
       ) : (
         <div className="h-screen w-full flex items-center justify-center">
           <Image src="/loader.svg" alt="Loader" width={100} height={100} />

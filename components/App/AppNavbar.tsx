@@ -11,7 +11,7 @@ const AppNavbar = () => {
   const setView = useAppViewStore((state) => state.setView);
 
   return (
-    <nav className="w-full flex flex-row items-center px-4 py-4 gap-4 fixed top-0 left-0 right-0 z-50 bg-gray-100">
+    <nav className="w-full flex flex-row items-center px-4 py-4 gap-4 fixed top-0 left-0 right-0 z-40 bg-gray-100">
       <div className="hidden md:flex cursor-pointer" onClick={() => setView("home")}>
         <span className="text-xl font-bold tracking-tighter">
           🛠️ TripArchitect

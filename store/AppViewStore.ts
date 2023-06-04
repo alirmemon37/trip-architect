@@ -5,7 +5,7 @@ interface AppViewStore {
   setView: (view: AppView) => void;
 }
 
-type AppView = "home" | "map" | "places" | "profile";
+type AppView = "home" | "map" | "trips" | "profile";
 
 export const useAppViewStore = create<AppViewStore>((set) => {
   return {

@@ -44,7 +44,7 @@ const AppSidebar = () => {
   return (
     <>
       <aside
-        className={`hidden md:flex flex-col h-[calc(100vh-76px)] fixed top-[76px] bottom-0 left-0 p-1 w-[72px] shadow-lg z-50`}
+        className={`hidden md:flex flex-col h-[calc(100vh-76px)] fixed top-[76px] bottom-0 left-0 p-1 w-[72px] shadow-lg z-40`}
       >
         <AppSidebarItem
           name="Home"
@@ -73,16 +73,16 @@ const AppSidebar = () => {
           }}
         />
         <AppSidebarItem
-          name="Places"
+          name="Trips"
           Icon={() =>
-            view === "places" ? (
+            view === "trips" ? (
               <GlobeAltIconSolid className="w-6 h-6" />
             ) : (
               <GlobeAltIcon className="w-6 h-6" />
             )
           }
           onClick={() => {
-            setView("places");
+            setView("trips");
           }}
         />
         <AppSidebarItem
@@ -100,7 +100,7 @@ const AppSidebar = () => {
         />
       </aside>
 
-      <aside className="fixed left-0 right-0 bottom-0 w-full flex md:hidden flex-row justify-evenly items-center shadow-xl border-t-2 border-gray-100 z-50">
+      <aside className="fixed left-0 right-0 bottom-0 w-full flex md:hidden flex-row justify-evenly items-center shadow-xl border-t-2 border-gray-100 z-40 bg-white">
         <AppSidebarItem
           name="Home"
           Icon={() =>
@@ -128,16 +128,16 @@ const AppSidebar = () => {
           }}
         />
         <AppSidebarItem
-          name="Places"
+          name="Trips"
           Icon={() =>
-            view === "places" ? (
+            view === "trips" ? (
               <GlobeAltIconSolid className="w-6 h-6" />
             ) : (
               <GlobeAltIcon className="w-6 h-6" />
             )
           }
           onClick={() => {
-            setView("places");
+            setView("trips");
           }}
         />
         <AppSidebarItem

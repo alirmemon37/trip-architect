@@ -16,8 +16,6 @@ const SignUp: FC<{ setRegister: Dispatch<SetStateAction<boolean>> }> = ({
     state.setUserLoading,
   ]);
 
-  console.log(user);
-
   const router = useRouter();
 
   const handleSignup = async (e: FormEvent<HTMLFormElement>) => {
@@ -25,7 +23,6 @@ const SignUp: FC<{ setRegister: Dispatch<SetStateAction<boolean>> }> = ({
     try {
       setUserLoading(true);
       const newUser = await account.create(ID.unique(), email, password, name);
-      console.log(newUser);
       await account.createEmailSession(email, password);
       setUserLoading(false);
       router.push("/app");
