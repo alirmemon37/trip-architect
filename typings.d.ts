@@ -21,3 +21,6 @@ interface Place {
   lng: number;
   date: Date;
 }
+
+// type for views in the app
+type AppView = "home" | "map" | "trips" | "profile";

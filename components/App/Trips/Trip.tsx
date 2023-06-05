@@ -3,12 +3,14 @@ import { useUserStore } from "@/store/UserStore";
 import { PhotoIcon } from "@heroicons/react/24/outline";
 import Avvvatars from "avvvatars-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const Trip = ({
   trip,
 }: {
   trip: {
+    $id: string;
     name: string;
     image: string;
     startDate: Date;
@@ -16,9 +18,12 @@ const Trip = ({
     creator: string;
   };
 }) => {
-  const [imageUrl, setImageUrl] = useState<string>("");
   const user = useUserStore((state) => state.user);
+
+  const [imageUrl, setImageUrl] = useState<string>("");
   const [imageLoading, setImageLoading] = useState<boolean>(false);
+
+  const router = useRouter();
 
   useEffect(() => {
     const fetchImage = async () => {
@@ -36,7 +41,9 @@ const Trip = ({
   }, [trip.image]);
 
   return (
-    <div className="relative flex flex-col border-[2px] border-gray-300 min-h-[250px] md:h-[250px]">
+    <div className="relative flex flex-col border-[2px] border-gray-300 min-h-[250px] md:h-[250px] md:cursor-pointer hover:border-black/60" onClick={() => {
+      router.push(`/app/trip/${trip.$id}`)
+    }}>
       <div className="relative h-[150px] w-full">
         {!imageLoading && imageUrl ? (
           <Image

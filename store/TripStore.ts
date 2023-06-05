@@ -1,7 +1,6 @@
 import { databases } from "@/appwrite";
-import { Query } from "appwrite";
+import { Models, Query } from "appwrite";
 import { create } from "zustand";
-import { useUserStore } from "./UserStore";
 
 interface TripStore {
   // all trips of the user
@@ -29,6 +28,17 @@ interface TripStore {
 
   // get all trips of the user from DB
   getTrips: (userId: string) => void;
+
+  // trip state
+  trip: Trip | null;
+  setTrip: (trip: Trip) => void;
+
+  // trip loading state
+  tripLoading: boolean;
+  setTripLoading: (loading: boolean) => void;
+
+  // get trip by id
+  getTripById: (tripId: string) => void;
 }
 
 export const useTripStore = create<TripStore>((set, get) => {
@@ -68,14 +78,59 @@ export const useTripStore = create<TripStore>((set, get) => {
             $createdAt: trip.$createdAt,
             $updatedAt: trip.$updatedAt,
             image: trip.image,
-          }
-        })
-        set({ trips: tripsFormatted })
+          };
+        });
+        set({ trips: tripsFormatted });
       } catch (error) {
         set({ trips: [] });
         console.log(error);
       } finally {
         set({ tripsLoading: false });
+      }
+    },
+
+    tripLoading: false,
+    setTripLoading: (loading) => set(() => ({ tripLoading: loading })),
+
+    trip: null,
+    setTrip: (trip) => set(() => ({ trip })),
+
+    getTripById: async (tripId: string) => {
+      // fetch from appwrite DB
+      set({ tripLoading: true });
+      try {
+        const response = await databases.getDocument(
+          process.env.NEXT_PUBLIC_TRIPARCHITECT_DATABASE_ID!,
+          process.env.NEXT_PUBLIC_TRIPS_COLLECTION_ID!,
+          tripId
+        );
+        const trip = response as Models.Document;
+        const {
+          $id,
+          creator,
+          name,
+          startDate,
+          endDate,
+          $createdAt,
+          $updatedAt,
+          image,
+        } = trip;
+        set({
+          trip: {
+            $id,
+            creator,
+            name,
+            startDate: new Date(startDate),
+            endDate: new Date(endDate),
+            $createdAt,
+            $updatedAt,
+            image,
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        set({ tripLoading: false });
       }
     },
   };
