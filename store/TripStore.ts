@@ -151,13 +151,12 @@ export const useTripStore = create<TripStore>((set, get) => {
     updateTrip: async (trip) => {
       // update trip in appwrite DB
       try {
-        const response = await databases.updateDocument(
+        await databases.updateDocument(
           process.env.NEXT_PUBLIC_TRIPARCHITECT_DATABASE_ID!,
           process.env.NEXT_PUBLIC_TRIPS_COLLECTION_ID!,
           trip.$id!,
           trip
         );
-        console.log(response);
       } catch (error) {
         console.log(error);
       }

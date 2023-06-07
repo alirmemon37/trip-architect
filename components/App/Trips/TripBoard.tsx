@@ -2,6 +2,7 @@ import React from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import TripBoardColumn from "./TripBoardColumn";
 import { useTripStore } from "@/store/TripStore";
+import AddNewPlaceModal from "./AddNewPlaceModal";
 
 interface TripBoardProps {
   tripBoardColumns: TripBoardColumn[];
@@ -132,7 +133,7 @@ const TripBoard = () => {
   };
 
   return (
-    <div className="mt-8">
+    <div className="mt-8 mb-16 md:mb-8">
       <DragDropContext onDragEnd={handleDragEnd}>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {/* map through all the dates */}
@@ -146,6 +147,7 @@ const TripBoard = () => {
           ))}
         </div>
       </DragDropContext>
+      <AddNewPlaceModal />
     </div>
   );
 };

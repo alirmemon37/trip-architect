@@ -16,6 +16,7 @@ const Trip = ({
     startDate: Date;
     endDate: Date;
     creator: string;
+    places?: string[];
   };
 }) => {
   const user = useUserStore((state) => state.user);
@@ -41,9 +42,12 @@ const Trip = ({
   }, [trip.image]);
 
   return (
-    <div className="relative flex flex-col border-[2px] border-gray-300 min-h-[250px] md:h-[250px] md:cursor-pointer hover:border-black/60" onClick={() => {
-      router.push(`/app/trip/${trip.$id}`)
-    }}>
+    <div
+      className="relative flex flex-col border-[2px] border-gray-300 min-h-[250px] md:h-[250px] md:cursor-pointer hover:border-black/60"
+      onClick={() => {
+        router.push(`/app/trip/${trip.$id}`);
+      }}
+    >
       <div className="relative h-[150px] w-full">
         {!imageLoading && imageUrl ? (
           <Image
@@ -73,12 +77,22 @@ const Trip = ({
         <div className="-mt-2 flex flex-col justify-between">
           <div className="flex justify-between">
             <h2 className="text-lg font-bold">{trip.name}</h2>
-            <span className="text-black/60 text-sm">0 places</span>
+            <span className="text-black/60 text-sm">
+              <span className="font-bold">
+                {/* calculate the number of places */}
+                {trip?.places?.reduce((acc, place) => {
+                  const placeObj = JSON.parse(place);
+                  const cards = placeObj.cards;
+                  return acc + cards.length;
+                }, 0)}{" "}
+              </span>
+              places
+            </span>
           </div>
           <div className="flex flex-col gap-2 md:flex-row items-start md:justify-between md:items-center w-full">
             <div className="text-sm">
               <span className="font-extralight">By </span>
-              
+
               {/* desktop */}
               <span className="hidden md:inline font-medium">
                 {user?.name.length! > 12
