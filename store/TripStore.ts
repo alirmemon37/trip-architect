@@ -33,12 +33,19 @@ interface TripStore {
   trip: Trip | null;
   setTrip: (trip: Trip) => void;
 
+  // trip board columns
+  tripBoardColumns: TripBoardColumn[];
+  setTripBoardColumns: (columns: TripBoardColumn[]) => void;
+
   // trip loading state
   tripLoading: boolean;
   setTripLoading: (loading: boolean) => void;
 
   // get trip by id
   getTripById: (tripId: string) => void;
+
+  // update trip in DB
+  updateTrip: (trip: Trip) => void;
 }
 
 export const useTripStore = create<TripStore>((set, get) => {
@@ -78,6 +85,7 @@ export const useTripStore = create<TripStore>((set, get) => {
             $createdAt: trip.$createdAt,
             $updatedAt: trip.$updatedAt,
             image: trip.image,
+            places: trip.places
           };
         });
         set({ trips: tripsFormatted });
@@ -94,6 +102,9 @@ export const useTripStore = create<TripStore>((set, get) => {
 
     trip: null,
     setTrip: (trip) => set(() => ({ trip })),
+
+    tripBoardColumns: [],
+    setTripBoardColumns: (columns) => set(() => ({ tripBoardColumns: columns })),
 
     getTripById: async (tripId: string) => {
       // fetch from appwrite DB
@@ -114,6 +125,7 @@ export const useTripStore = create<TripStore>((set, get) => {
           $createdAt,
           $updatedAt,
           image,
+          places
         } = trip;
         set({
           trip: {
@@ -125,6 +137,7 @@ export const useTripStore = create<TripStore>((set, get) => {
             $createdAt,
             $updatedAt,
             image,
+            places
           },
         });
       } catch (error) {
@@ -133,5 +146,21 @@ export const useTripStore = create<TripStore>((set, get) => {
         set({ tripLoading: false });
       }
     },
+
+    // should work for any property of trip
+    updateTrip: async (trip) => {
+      // update trip in appwrite DB
+      try {
+        const response = await databases.updateDocument(
+          process.env.NEXT_PUBLIC_TRIPARCHITECT_DATABASE_ID!,
+          process.env.NEXT_PUBLIC_TRIPS_COLLECTION_ID!,
+          trip.$id!,
+          trip
+        );
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 });

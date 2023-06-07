@@ -57,8 +57,6 @@ const AppSidebarItems = () => {
   useEffect(() => {
     if (pathname.includes("trip")) {
       setView("trips")
-    } else {
-      setView("home")
     }
   }, [pathname])
 
