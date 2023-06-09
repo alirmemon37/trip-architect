@@ -81,6 +81,7 @@ const CreateTripModal = () => {
       $id: response?.$id!,
       $createdAt: response?.$createdAt!,
       $updatedAt: response?.$updatedAt!,
+      places: [],
     });
 
     setImageFile(null);

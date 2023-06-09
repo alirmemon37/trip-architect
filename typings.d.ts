@@ -35,6 +35,9 @@ interface TripBoardColumn {
 interface TripBoardCard {
   // $id: string;
   name: string;
+  lng?: number;
+  lat?: number;
+  countryName?: string;
   // description: string;
   // $createdAt: string;
   // $updatedAt: string;
@@ -42,9 +45,9 @@ interface TripBoardCard {
 
 interface Place {
   name: string;
-  // lat: number;
-  // lng: number;
-  // date: Date;
+  lng: number;
+  lat: number;
+  countryName: string;
 }
 
 // type for views in the app

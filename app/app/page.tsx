@@ -1,6 +1,6 @@
 "use client"
 
-import Map from "@/components/App/Map/Map";
+import MapPage from "@/components/App/Map/MapPage";
 import Trips from "@/components/App/Trips/Trips";
 import { useAppViewStore } from "@/store/AppViewStore";
 import React from "react";
@@ -13,7 +13,7 @@ const App = () => {
       {view === "home" ? (
         <h1 className="text-5xl md:text-7xl font-extrabold">Trip Architect</h1>
       ) : view === "map" ? (
-        <Map />
+        <MapPage />
       ) : view === "trips" ? (
         <Trips />
       ) : view === "profile" ? (

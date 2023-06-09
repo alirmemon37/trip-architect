@@ -3,6 +3,7 @@ import { Droppable } from "react-beautiful-dnd";
 import TripBoardCard from "./TripBoardCard";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { useAddNewPlaceStore } from "@/store/AddNewPlaceStore";
+import { useAddNewPlaceWithMapStore } from "@/store/AddNewPlaceWithMapStore";
 
 const TripBoardColumn = ({
   column,
@@ -13,11 +14,14 @@ const TripBoardColumn = ({
   id: string;
   index: number;
 }) => {
-  const [openModal, setColumnHeading] = useAddNewPlaceStore((state) => [state.openModal, state.setColumnHeading]);
+  const [openModal] = useAddNewPlaceStore((state) => [state.openModal]);
+  const [setIsAddNewPlaceWithMapOpen, setColumnHeading] = useAddNewPlaceWithMapStore(
+    (state) => [state.setIsAddNewPlaceWithMapOpen, state.setColumnHeading]
+  );
 
   const handleAddPlace = (columnHeading: string) => {
     setColumnHeading(columnHeading);
-    openModal();
+    setIsAddNewPlaceWithMapOpen(true);
   };
 
   return (

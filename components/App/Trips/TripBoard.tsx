@@ -3,6 +3,8 @@ import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import TripBoardColumn from "./TripBoardColumn";
 import { useTripStore } from "@/store/TripStore";
 import AddNewPlaceModal from "./AddNewPlaceModal";
+import { useAddNewPlaceWithMapStore } from "@/store/AddNewPlaceWithMapStore";
+import clsx from "clsx";
 
 interface TripBoardProps {
   tripBoardColumns: TripBoardColumn[];
@@ -17,6 +19,9 @@ const TripBoard = () => {
       state.tripBoardColumns,
       state.setTripBoardColumns,
     ]);
+  const isAddNewPlaceWithMapOpen = useAddNewPlaceWithMapStore(
+    (state) => state.isAddNewPlaceWithMapOpen
+  );
 
   const handleDragEnd = (result: DropResult) => {
     const { source, destination } = result;
@@ -52,7 +57,6 @@ const TripBoard = () => {
         destItemIndex
       );
     }
-
   };
 
   const sameColumnReorder = (
@@ -133,9 +137,15 @@ const TripBoard = () => {
   };
 
   return (
-    <div className="mt-8 mb-16 md:mb-8">
+    <div className="mt-8 mb-16 md:mb-8 py-2 md:px-6 md:py-4">
       <DragDropContext onDragEnd={handleDragEnd}>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        <div
+          className={clsx(
+            "grid grid-cols-1 gap-8",
+            !isAddNewPlaceWithMapOpen &&
+              "md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+          )}
+        >
           {/* map through all the dates */}
           {tripBoardColumns.map((column, index) => (
             <TripBoardColumn

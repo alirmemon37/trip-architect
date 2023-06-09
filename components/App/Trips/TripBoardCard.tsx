@@ -18,8 +18,9 @@ const TripBoardCard = ({
           {...provided.dragHandleProps}
           ref={provided.innerRef}
         >
-          <div className="bg-white py-3 px-4 font-semibold shadow-sm rounded-sm">
-            {card.name}
+          <div className="flex flex-col gap-1 bg-white py-3 px-4 font-semibold shadow-sm rounded-sm">
+            <span>{card.name}</span>
+            <span className="text-sm text-gray-400">{card?.countryName}</span>
           </div>
         </div>
       )}
