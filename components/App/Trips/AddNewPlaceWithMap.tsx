@@ -2,11 +2,15 @@
 
 import { useAddNewPlaceWithMapStore } from "@/store/AddNewPlaceWithMapStore";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import React from "react";
+import React, { useEffect } from "react";
 import TripPageHeader from "./TripPageHeader";
 import TripBoard from "./TripBoard";
 import Map from "../Map/Map";
 import { useTripStore } from "@/store/TripStore";
+import { useMapStore } from "@/store/MapStore";
+import maplibregl from "maplibre-gl";
+import { GeocodingControl } from "@maptiler/geocoding-control/maplibregl";
+import { countryNameFromCode } from "@/utils/countryNameFromCode";
 
 const AddNewPlaceWithMap = () => {
   const [
@@ -61,7 +65,75 @@ const AddNewPlaceWithMap = () => {
     // local state update
     setTripBoardColumns(updatedColumns);
     setPickedPlace(null);
+    geocodingControl?.setQuery("");
   };
+
+  const [map, geocodingControl, setGeocodingControl] = useMapStore((state) => [state.map, state.geocodingControl, state.setGeocodingControl]);
+  const apiKey = process.env.NEXT_PUBLIC_MAPTILER_API_KEY!;
+
+  const handlePickEvent = (event: Event) => {
+    // @ts-ignore
+    const eventDetails = event.detail;
+    console.log(eventDetails);
+
+    if (!eventDetails) return;
+
+    const placeName = eventDetails.place_name;
+    const countryCode = eventDetails.properties.country_code;
+    if (eventDetails.geometry.type === "Point") {
+      const [longitude, latitude] = eventDetails.geometry.coordinates;
+      setPickedPlace({
+        name: placeName,
+        lng: longitude as number,
+        lat: latitude as number,
+        countryName: countryNameFromCode[countryCode.toUpperCase()],
+      });
+    } else {
+      const [longitude, latitude] = eventDetails.center;
+      setPickedPlace({
+        name: placeName,
+        lng: longitude as number,
+        lat: latitude as number,
+        countryName: countryNameFromCode[countryCode.toUpperCase()],
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (!map) return;
+    const gc = new GeocodingControl({
+      apiKey,
+      // @ts-ignore
+      maplibregl,
+      types: [
+        "county",
+        "municipality",
+        "municipal_district",
+        "locality",
+        "neighbourhood",
+        "place",
+      ],
+      minLength: 3,
+      fuzzyMatch: true,
+      limit: 5,
+      autoComplete: false,
+    });
+
+    setGeocodingControl(gc);
+    gc.addEventListener("pick", handlePickEvent);
+
+
+    map.addControl(gc);
+
+    // map controls
+    map.addControl(new maplibregl.NavigationControl(), "bottom-right");
+
+    // Return a cleanup function to remove the event listener
+    return () => {
+      gc.removeEventListener("pick", handlePickEvent);
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [map]);
 
   return (
     <div className="grid grid-cols-3">
