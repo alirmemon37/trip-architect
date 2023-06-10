@@ -1,10 +1,10 @@
 import { ID, storage } from "@/appwrite";
 
-export default async function uploadImage(file: File) {
+export default async function uploadImage(file: File, bucketId: string) {
   if (!file) return;
 
   const fileUploaded = await storage.createFile(
-    process.env.NEXT_PUBLIC_TRIP_BANNER_IMAGE_BUCKET_ID!,
+    bucketId,
     ID.unique(),
     file
   );

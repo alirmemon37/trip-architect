@@ -8,6 +8,7 @@ import { useAppViewStore } from "@/store/AppViewStore";
 import { Menu, Transition } from "@headlessui/react";
 import { useRouter } from "next/navigation";
 import { useCreateTripModalStore } from "@/store/CreateTripModalStore";
+import UserAvatar from "./UserAvatar";
 
 const AppNavbar = () => {
   const [user, logout] = useUserStore((state) => [state.user, state.logout]);
@@ -56,16 +57,10 @@ const AppNavbar = () => {
         </div>
         <Menu as="div" className="relative inline-block">
           <div>
-            <Menu.Button className="flex items-center space-x-2">
-              <Avvvatars
-                value={user?.name || ""}
-                style="character"
-                size={38}
-                shadow={true}
-                border={true}
-                borderSize={2}
-                borderColor="#fff"
-              />
+            <Menu.Button
+              className="w-10 h-10 flex items-center space-x-2 rounded-full"
+            >
+              <UserAvatar />
             </Menu.Button>
 
             <Transition
@@ -78,7 +73,21 @@ const AppNavbar = () => {
               leaveTo="transform opacity-0 scale-95"
             >
               <Menu.Items className="absolute right-0 w-44 mt-2 font-medium  origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                <div className="px-1 py-1 ">
+                <div className="px-1 py-1">
+                  <Menu.Item>
+                    {({ active }) => (
+                      <button
+                        onClick={() => {
+                          setView("profile");
+                        }}
+                        className={`${
+                          active ? "bg-blue-500 text-white" : "text-gray-900"
+                        } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                      >
+                        Profile
+                      </button>
+                    )}
+                  </Menu.Item>
                   <Menu.Item>
                     {({ active }) => (
                       <button

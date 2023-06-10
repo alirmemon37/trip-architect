@@ -1,5 +1,5 @@
 import { account } from "@/appwrite";
-import { AppwriteException } from "appwrite";
+import { AppwriteException, Models } from "appwrite";
 import { create } from "zustand";
 
 interface UserStore {
@@ -17,6 +17,7 @@ interface User {
   $updatedAt: string;
   name: string;
   email: string;
+  prefs?: Models.Preferences;
 }
 
 export const useUserStore = create<UserStore>((set) => {
@@ -40,6 +41,7 @@ export const useUserStore = create<UserStore>((set) => {
             $createdAt: userData.$createdAt,
             $id: userData.$id,
             $updatedAt: userData.$updatedAt,
+            prefs: userData.prefs,
           },
         });
       } catch (error) {

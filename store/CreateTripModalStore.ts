@@ -60,7 +60,7 @@ export const useCreateTripModalStore = create<CreateTripModalStore>((set) => {
         let file: Image | undefined;
 
         if (trip.image) {
-          const fileUploaded = await uploadImage(trip.image);
+          const fileUploaded = await uploadImage(trip.image, process.env.NEXT_PUBLIC_TRIP_BANNER_IMAGE_BUCKET_ID!);
           if (fileUploaded) {
             file = {
               bucketId: fileUploaded.bucketId,

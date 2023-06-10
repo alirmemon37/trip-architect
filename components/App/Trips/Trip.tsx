@@ -1,10 +1,10 @@
 import getUrl from "@/lib/getUrl";
 import { useUserStore } from "@/store/UserStore";
 import { PhotoIcon } from "@heroicons/react/24/outline";
-import Avvvatars from "avvvatars-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import UserAvatar from "../UserAvatar";
 
 const Trip = ({
   trip,
@@ -63,16 +63,8 @@ const Trip = ({
         )}
       </div>
       <div className="flex-1 px-4 pb-2">
-        <div className="-translate-y-4">
-          <Avvvatars
-            value={user?.name || ""}
-            style="character"
-            size={36}
-            shadow={true}
-            border={true}
-            borderSize={2}
-            borderColor="#fff"
-          />
+        <div className="-translate-y-4 w-10 h-10 border-2 border-white rounded-full">
+          <UserAvatar />
         </div>
         <div className="-mt-2 flex flex-col justify-between">
           <div className="flex justify-between">
