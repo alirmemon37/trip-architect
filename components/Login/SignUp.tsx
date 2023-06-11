@@ -1,6 +1,7 @@
 import { ID, account } from "@/appwrite";
 import { useUserStore } from "@/store/UserStore";
 import { AppwriteException } from "appwrite";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Dispatch, FC, FormEvent, SetStateAction, useState } from "react";
 
@@ -26,26 +27,21 @@ const SignUp: FC<{ setRegister: Dispatch<SetStateAction<boolean>> }> = ({
     } catch (error) {
       console.log(error);
       if (error instanceof AppwriteException) {
-        {/* @ts-ignore */}
-        alert(error.response.message);
+        const errorResponse = error.response as any;
+        alert(errorResponse.message);
       }
     }
   };
 
   return (
     <>
-      <section className="container h-screen mx-auto flex">
-        <div className="flex-grow flex flex-col max-w-xl justify-center p-6">
-          <h1 className="text-6xl font-bold">Sign Up</h1>
-          <p className="mt-4">
-            {" "}
-            Already have an account ?{" "}
-            <span
-              className="cursor-pointer underline"
-              onClick={() => setRegister(false)}
-            >
-              Login
-            </span>{" "}
+      <section className="h-screen mx-auto grid md:grid-cols-9">
+        <div className="col-span-5 md:justify-self-center flex-grow flex flex-col md:max-w-xl justify-center py-6 px-8 md:pl-16 md:pr-8">
+          <span className="text-4xl mb-4 md:hidden">🛠️</span>
+          <h1 className="text-5xl md:text-6xl font-bold">Hey, hello 👋</h1>
+          <p className="text-gray-500 mt-2 text-lg">
+            Discover the World with TripArchitect🛠️, Just One Step Away from your
+            adventure!
           </p>
           <form onSubmit={handleSignup}>
             <label className="block mt-6">Name</label>
@@ -76,8 +72,17 @@ const SignUp: FC<{ setRegister: Dispatch<SetStateAction<boolean>> }> = ({
               autoComplete="password"
               required
             />
-
-            <div className="mt-6">
+            <p className="mt-6 text-right">
+              {" "}
+              Already have an account ?{" "}
+              <span
+                className="cursor-pointer underline"
+                onClick={() => setRegister(false)}
+              >
+                Login
+              </span>{" "}
+            </p>
+            <div className="mt-4">
               <button
                 type="submit"
                 disabled={!email || !password || !name}
@@ -87,6 +92,14 @@ const SignUp: FC<{ setRegister: Dispatch<SetStateAction<boolean>> }> = ({
               </button>
             </div>
           </form>
+        </div>
+        <div className="relative overflow-hidden col-span-4 hidden md:flex items-center">
+          <Image
+            src="/login-img.png"
+            fill={true}
+            alt="Login page"
+            className="scale-150"
+          />
         </div>
       </section>
     </>

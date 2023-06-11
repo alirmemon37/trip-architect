@@ -3,6 +3,7 @@
 import { account } from "@/appwrite";
 import { useUserStore } from "@/store/UserStore";
 import { AppwriteException } from "appwrite";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, {
   FC,
@@ -32,25 +33,19 @@ const Login: FC<{ setRegister: Dispatch<SetStateAction<boolean>> }> = ({
     } catch (error) {
       console.log(error);
       if (error instanceof AppwriteException) {
-        {/* @ts-ignore */}
-        alert(error.response.message)
+        const errorResponse = error.response as any;
+        alert(errorResponse.message);
       }
     }
   };
 
   return (
-    <section className="container h-screen mx-auto flex">
-      <div className="flex-grow flex flex-col max-w-xl justify-center p-6">
-        <h1 className="text-6xl font-bold">Login</h1>
-        <p className="mt-6">
-          {" "}
-          Don&apos;t have an account ?{" "}
-          <span
-            className="cursor-pointer underline"
-            onClick={() => setRegister(true)}
-          >
-            Sign Up
-          </span>{" "}
+    <section className="h-screen mx-auto grid md:grid-cols-9">
+      <div className="col-span-5 md:justify-self-center flex-grow flex flex-col md:max-w-xl justify-center py-6 px-8 md:pl-16 md:pr-8">
+        <span className="text-4xl mb-4 md:hidden">🛠️</span>
+        <h1 className="text-5xl md:text-6xl font-bold">Welcome Back 👋</h1>
+        <p className="text-gray-500 mt-2 mb-2 text-lg">
+          Enter the information you added while registering.
         </p>
         <form onSubmit={handleLogin}>
           <label className="block mt-6">Email</label>
@@ -71,7 +66,16 @@ const Login: FC<{ setRegister: Dispatch<SetStateAction<boolean>> }> = ({
             autoComplete="password"
             required
           />
-
+          <p className="mt-8 text-right">
+            {" "}
+            Don&apos;t have an account ?{" "}
+            <span
+              className="cursor-pointer underline"
+              onClick={() => setRegister(true)}
+            >
+              Sign Up
+            </span>{" "}
+          </p>
           <div className="mt-6">
             <button
               type="submit"
@@ -82,6 +86,14 @@ const Login: FC<{ setRegister: Dispatch<SetStateAction<boolean>> }> = ({
             </button>
           </div>
         </form>
+      </div>
+      <div className="relative overflow-hidden col-span-4 hidden md:flex items-center">
+        <Image
+          src="/login-img.png"
+          fill={true}
+          alt="Login page"
+          className="scale-150"
+        />
       </div>
     </section>
   );
