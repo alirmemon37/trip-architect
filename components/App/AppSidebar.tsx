@@ -58,6 +58,7 @@ const AppSidebarItems = () => {
     if (pathname.includes("trip")) {
       setView("trips")
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
 
   return (
@@ -121,14 +122,6 @@ const AppSidebarItems = () => {
 }
  
 const AppSidebar = () => {
-  const [view, setView] = useAppViewStore((state) => [
-    state.view,
-    state.setView,
-  ]);
-
-  const pathname = usePathname();
-  const router = useRouter();
-
   return (
     <>
       <aside

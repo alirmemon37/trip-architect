@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import maplibregl from 'maplibre-gl';
-import GeocodingControl from '@maptiler/geocoding-control/GeocodingControl.svelte';
+import { GeocodingControl } from '@maptiler/geocoding-control/maplibregl';
 
 interface MapStore {
   map: maplibregl.Map | null;

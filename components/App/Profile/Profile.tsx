@@ -32,6 +32,7 @@ const Profile = () => {
 
   useEffect(() => {
     setName(user?.name ?? "");
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.name]);
 
   const avatarRef = useRef<HTMLInputElement>(null);
