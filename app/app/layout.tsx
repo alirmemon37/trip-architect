@@ -1,7 +1,7 @@
 "use client";
 
-import AppNavbar from "@/components/App/AppNavbar";
-import AppSidebar from "@/components/App/AppSidebar";
+import AppNavbar from "@/components/App/General/AppNavbar";
+import AppSidebar from "@/components/App/General/AppSidebar";
 import { useUserStore } from "@/store/UserStore";
 import Image from "next/image";
 import { useRouter } from "next/navigation";

@@ -57,9 +57,7 @@ const AppNavbar = () => {
         </div>
         <Menu as="div" className="relative inline-block">
           <div>
-            <Menu.Button
-              className="w-10 h-10 flex items-center space-x-2 rounded-full"
-            >
+            <Menu.Button className="w-10 h-10 flex items-center space-x-2 rounded-full">
               <UserAvatar />
             </Menu.Button>
 

@@ -4,7 +4,7 @@ import { PhotoIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import UserAvatar from "../UserAvatar";
+import UserAvatar from "../General/UserAvatar";
 
 const Trip = ({
   trip,

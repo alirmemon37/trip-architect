@@ -1,9 +1,9 @@
 import { ID, account } from "@/appwrite";
 import { useUserStore } from "@/store/UserStore";
 import { AppwriteException } from "appwrite";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Dispatch, FC, FormEvent, SetStateAction, useState } from "react";
+import LoginPageImage from "./LoginPageImage";
 
 const SignUp: FC<{ setRegister: Dispatch<SetStateAction<boolean>> }> = ({
   setRegister,
@@ -40,8 +40,8 @@ const SignUp: FC<{ setRegister: Dispatch<SetStateAction<boolean>> }> = ({
           <span className="text-4xl mb-4 md:hidden">🛠️</span>
           <h1 className="text-5xl md:text-6xl font-bold">Hey, hello 👋</h1>
           <p className="text-gray-500 mt-2 text-lg">
-            Discover the World with TripArchitect🛠️, Just One Step Away from your
-            adventure!
+            Discover the World with TripArchitect🛠️, Just One Step Away from
+            your adventure!
           </p>
           <form onSubmit={handleSignup}>
             <label className="block mt-6">Name</label>
@@ -93,14 +93,7 @@ const SignUp: FC<{ setRegister: Dispatch<SetStateAction<boolean>> }> = ({
             </div>
           </form>
         </div>
-        <div className="relative overflow-hidden col-span-4 hidden md:flex items-center">
-          <Image
-            src="/login-img.png"
-            fill={true}
-            alt="Login page"
-            className="scale-150"
-          />
-        </div>
+        <LoginPageImage />
       </section>
     </>
   );

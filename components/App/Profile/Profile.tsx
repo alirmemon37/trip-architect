@@ -92,7 +92,7 @@ const Profile = () => {
   }, [user?.prefs?.avatar]);
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 p-4 md:py-6 md:px-10">
       <h1 className="text-5xl md:text-7xl font-extrabold">Profile</h1>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-4 max-w-xl">

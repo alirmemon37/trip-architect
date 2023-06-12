@@ -3,7 +3,6 @@
 import { account } from "@/appwrite";
 import { useUserStore } from "@/store/UserStore";
 import { AppwriteException } from "appwrite";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, {
   FC,
@@ -12,6 +11,7 @@ import React, {
   FormEvent,
   useState,
 } from "react";
+import LoginPageImage from "./LoginPageImage";
 
 const Login: FC<{ setRegister: Dispatch<SetStateAction<boolean>> }> = ({
   setRegister,
@@ -45,7 +45,8 @@ const Login: FC<{ setRegister: Dispatch<SetStateAction<boolean>> }> = ({
         <span className="text-4xl mb-4 md:hidden">🛠️</span>
         <h1 className="text-5xl md:text-6xl font-bold">Welcome Back 👋</h1>
         <p className="text-gray-500 mt-2 mb-2 text-lg">
-          Enter the information you added while registering.
+          Revive Your Travel Plans, Login and Resume Building Your Unforgettable
+          Journey!
         </p>
         <form onSubmit={handleLogin}>
           <label className="block mt-6">Email</label>
@@ -87,14 +88,7 @@ const Login: FC<{ setRegister: Dispatch<SetStateAction<boolean>> }> = ({
           </div>
         </form>
       </div>
-      <div className="relative overflow-hidden col-span-4 hidden md:flex items-center">
-        <Image
-          src="/login-img.png"
-          fill={true}
-          alt="Login page"
-          className="scale-150"
-        />
-      </div>
+      <LoginPageImage />
     </section>
   );
 };
