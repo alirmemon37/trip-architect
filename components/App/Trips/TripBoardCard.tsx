@@ -3,15 +3,18 @@ import { useMapStore } from "@/store/MapStore";
 import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 import maplibregl from "maplibre-gl";
+import TripBoardCardMenu from "./TripBoardCardMenu";
 
 const TripBoardCard = ({
   card,
   index,
   id,
+  columnHeading
 }: {
   card: TripBoardCard;
   index: number;
   id: string;
+  columnHeading: string;
 }) => {
   const setIsAddNewPlaceWithMapOpen = useAddNewPlaceWithMapStore(
     (state) => state.setIsAddNewPlaceWithMapOpen
@@ -53,12 +56,17 @@ const TripBoardCard = ({
           {...provided.dragHandleProps}
           ref={provided.innerRef}
         >
-          <div
-            onClick={handlePlaceClick}
-            className="flex flex-col gap-1 bg-white py-3 px-4 font-semibold shadow-sm rounded-sm"
-          >
-            <span>{card.name}</span>
-            <span className="text-sm text-gray-400">{card?.countryName}</span>
+          <div className="relative group/card">
+            <div
+              onClick={handlePlaceClick}
+              className="flex flex-col gap-1 bg-white py-3 px-4 font-semibold shadow-sm rounded-sm"
+            >
+              <span>{card.name}</span>
+              <span className="text-sm text-gray-400">{card?.countryName}</span>
+            </div>
+            <span onClick={(e) => e.stopPropagation()}>
+              <TripBoardCardMenu card={card} columnHeading={columnHeading} />
+            </span>
           </div>
         </div>
       )}

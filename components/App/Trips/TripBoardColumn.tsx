@@ -54,6 +54,7 @@ const TripBoardColumn = ({
                     card={card}
                     index={index}
                     id={card.name}
+                    columnHeading={column.heading}
                   />
                 ))}
                 {provided.placeholder}

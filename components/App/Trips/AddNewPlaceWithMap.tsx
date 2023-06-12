@@ -72,7 +72,7 @@ const AddNewPlaceWithMap = () => {
       geocodingControl?.removeEventListener("pick", handlePickEvent);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [map]);
+  }, [map, geocodingControl, navigationControl]);
 
   // pick event handler (when user clicks a place from the search results)
   const handlePickEvent = (event: Event) => {

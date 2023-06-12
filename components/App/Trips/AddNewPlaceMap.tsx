@@ -40,7 +40,7 @@ const AddNewPlaceMap = () => {
     );
 
     // Create a new card object
-    const card = {
+    const card: TripBoardCard = {
       name: pickedPlace.name,
       lng: pickedPlace.lng,
       lat: pickedPlace.lat,
