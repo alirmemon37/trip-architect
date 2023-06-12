@@ -151,7 +151,6 @@ const TripBoard = () => {
             <TripBoardColumn
               key={index}
               column={column}
-              index={index}
               id={column.heading}
             />
           ))}
