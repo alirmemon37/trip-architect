@@ -8,6 +8,7 @@ import UserAvatar from "../General/UserAvatar";
 
 const Trip = ({
   trip,
+  onTripClick
 }: {
   trip: {
     $id: string;
@@ -17,7 +18,8 @@ const Trip = ({
     endDate: Date;
     creator: string;
     places?: string[];
-  };
+  },
+  onTripClick: () => void
 }) => {
   const user = useUserStore((state) => state.user);
 
@@ -44,9 +46,7 @@ const Trip = ({
   return (
     <div
       className="relative flex flex-col border-[2px] border-gray-300 min-h-[250px] md:h-[250px] md:cursor-pointer hover:border-black/60"
-      onClick={() => {
-        router.push(`/app/trip/${trip.$id}`);
-      }}
+      onClick={onTripClick}
     >
       <div className="relative h-[150px] w-full">
         {!imageLoading && imageUrl ? (

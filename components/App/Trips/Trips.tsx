@@ -4,6 +4,7 @@ import { useTripStore } from "@/store/TripStore";
 import { useUserStore } from "@/store/UserStore";
 import React, { useEffect } from "react";
 import Trip from "./Trip";
+import { useRouter } from "next/navigation";
 
 const Trips = () => {
   const userId = useUserStore((state) => state.user?.$id);
@@ -12,6 +13,8 @@ const Trips = () => {
     state.getTrips,
     state.tripsLoading,
   ]);
+
+  const router = useRouter()
 
   useEffect(() => {
     const fetchTrips = async () => {
@@ -39,7 +42,15 @@ const Trips = () => {
           </div>
         </>
       ) : (
-        trips.map((trip) => <Trip key={trip.$id} trip={trip} />)
+        trips.map((trip) => (
+          <Trip
+            key={trip.$id}
+            trip={trip}
+            onTripClick={() => {
+              router.push(`/app/trip/${trip.$id}`);
+            }}
+          />
+        ))
       )}
     </>
   );

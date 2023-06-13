@@ -6,8 +6,8 @@ import TripPageHeader from "@/components/App/Trips/TripPageHeader";
 import { useAddNewPlaceWithMapStore } from "@/store/AddNewPlaceWithMapStore";
 import { useAppViewStore } from "@/store/AppViewStore";
 import { useTripStore } from "@/store/TripStore";
+import getValidDates from "@/utils/getValidDates";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
-import { eachDayOfInterval, format } from "date-fns";
 import { usePathname, useRouter } from "next/navigation";
 import React, { FC, useEffect } from "react";
 
@@ -23,13 +23,11 @@ const TripPage: FC<TripPageProps> = ({ params }) => {
     trip,
     tripLoading,
     getTripById,
-    tripBoardColumns,
     setTripBoardColumns,
   ] = useTripStore((state) => [
     state.trip,
     state.tripLoading,
     state.getTripById,
-    state.tripBoardColumns,
     state.setTripBoardColumns,
   ]);
   const setView = useAppViewStore((state) => state.setView);
@@ -52,12 +50,6 @@ const TripPage: FC<TripPageProps> = ({ params }) => {
     getTripColumns(trip!);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [trip]);
-
-  function getValidDates(startDate: Date, endDate: Date) {
-    const validDates = eachDayOfInterval({ start: startDate, end: endDate });
-    const formattedDates = validDates.map((date) => format(date, "dd-MM-yyyy"));
-    return formattedDates;
-  }
 
   function getTripColumns(trip: Trip) {
     if (!trip) return;
