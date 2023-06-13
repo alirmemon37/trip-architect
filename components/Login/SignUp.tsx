@@ -36,8 +36,8 @@ const SignUp: FC<{ setRegister: Dispatch<SetStateAction<boolean>> }> = ({
   return (
     <>
       <section className="h-screen mx-auto grid md:grid-cols-9">
-        <div className="col-span-5 md:justify-self-center flex-grow flex flex-col md:max-w-xl justify-center py-6 px-8 md:pl-16 md:pr-8">
-          <span className="text-4xl mb-4 md:hidden">🛠️</span>
+        <div className="col-span-5 md:justify-self-center flex-grow flex flex-col md:max-w-xl md:justify-center py-4 px-8 md:pl-16 md:pr-8">
+          <span className="text-2xl mb-16 md:hidden tracking-tighter font-bold">🛠️ TripArchitect</span>
           <h1 className="text-5xl md:text-6xl font-bold">Hey, hello 👋</h1>
           <p className="text-gray-500 mt-2 text-lg">
             Discover the World with TripArchitect🛠️, Just One Step Away from

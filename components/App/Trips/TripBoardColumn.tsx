@@ -12,8 +12,8 @@ const TripBoardColumn = ({
   column: TripBoardColumn;
   id: string;
 }) => {
-  const [setIsAddNewPlaceWithMapOpen, setColumnHeading] = useAddNewPlaceWithMapStore(
-    (state) => [state.setIsAddNewPlaceWithMapOpen, state.setColumnHeading]
+  const [setIsAddNewPlaceWithMapOpen, setColumnHeading, setIsMobileMapOpen] = useAddNewPlaceWithMapStore(
+    (state) => [state.setIsAddNewPlaceWithMapOpen, state.setColumnHeading, state.setIsMobileMapOpen]
   );
   const mapMarker = useMapStore((state) => state.mapMarker);
 
@@ -25,6 +25,10 @@ const TripBoardColumn = ({
     if (mapMarker) {
       mapMarker.remove();
     }
+
+    // open mobile map
+    setIsMobileMapOpen(true);
+
   };
 
   return (

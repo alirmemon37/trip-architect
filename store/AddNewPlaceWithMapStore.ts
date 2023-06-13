@@ -14,6 +14,10 @@ interface AddNewPlaceWithMapStore {
   pickedPlace: Place | null
   setPickedPlace: (pickedPlace: Place | null) => void
 
+  // show map on mobile state
+  isMobileMapOpen: boolean
+  setIsMobileMapOpen: (isMobileMapOpen: boolean) => void
+
 }
 
 export const useAddNewPlaceWithMapStore = create<AddNewPlaceWithMapStore>((set) => ({
@@ -26,4 +30,7 @@ export const useAddNewPlaceWithMapStore = create<AddNewPlaceWithMapStore>((set) 
 
   pickedPlace: null,
   setPickedPlace: (pickedPlace: Place | null) => set({ pickedPlace }),
+
+  isMobileMapOpen: false,
+  setIsMobileMapOpen: (isMobileMapOpen: boolean) => set({ isMobileMapOpen }),
 }))

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import TripPageHeader from "./TripPageHeader";
 import TripBoard from "./TripBoard";
 import { useMapStore } from "@/store/MapStore";
@@ -11,8 +11,8 @@ import AddNewPlaceMap from "./AddNewPlaceMap";
 import { useAddNewPlaceWithMapStore } from "@/store/AddNewPlaceWithMapStore";
 
 const AddNewPlaceWithMap = () => {
-  const setPickedPlace = useAddNewPlaceWithMapStore(
-    (state) => state.setPickedPlace
+  const [setPickedPlace, isMobileMapOpen, setIsMobileMapOpen] = useAddNewPlaceWithMapStore(
+    (state) => [state.setPickedPlace, state.isMobileMapOpen, state.setIsMobileMapOpen]
   );
 
   const [
@@ -106,15 +106,27 @@ const AddNewPlaceWithMap = () => {
   };
 
   return (
-    <div className="grid grid-cols-3">
-      <div className="flex flex-col gap-4 w-full h-[calc(100vh-76px)] overflow-scroll shadow-lg z-10">
-        <TripPageHeader />
-        <TripBoard />
+    <>
+      <div className="hidden md:grid grid-cols-3">
+        <div className="flex flex-col gap-4 w-full h-[calc(100vh-76px)] overflow-scroll shadow-lg z-10">
+          <TripPageHeader />
+          <TripBoard />
+        </div>
+        <div className="relative col-span-2">
+          <AddNewPlaceMap />
+        </div>
       </div>
-      <div className="relative col-span-2">
-        <AddNewPlaceMap />
+
+      <div className="flex md:hidden">
+        <div className="flex flex-col gap-4 w-full h-[calc(100vh-76px)] overflow-scroll shadow-lg z-10">
+          <TripPageHeader />
+          <TripBoard />
+        </div>
+        <div className={`${isMobileMapOpen ? "flex" : "hidden"}`}>
+          <AddNewPlaceMap />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

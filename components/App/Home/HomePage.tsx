@@ -31,7 +31,7 @@ const HomePage = () => {
   return (
     <div className="p-4 md:py-6 md:px-10">
       <h1 className="text-4xl md:text-5xl font-extrabold mb-8">
-        Welcome to TripArchitect 🛠️
+        Welcome to TripArchitect
       </h1>
 
       <div className="flex gap-6 flex-wrap">
@@ -42,7 +42,7 @@ const HomePage = () => {
           }, 0)}
         />
         <div>
-          <h2 className="mb-2 text-2xl font-bold">Upcoming Trip</h2>
+          <h2 className="mb-2 text-xl md:text-2xl font-bold">Upcoming Trip</h2>
           <div
             onClick={() => {
               if (getUpcomingTrip(trips)) {
@@ -53,12 +53,14 @@ const HomePage = () => {
             }}
             className="flex gap-6 cursor-pointer"
           >
-            <div className="min-w-[160px] min-h-[120px] p-4 bg-gray-100 rounded-lg flex flex-col items-center hover:bg-gray-300 transition-colors duration-150">
+            <div className="min-w-[60px] md:min-w-[160px] md:min-h-[120px] p-4 bg-gray-100 rounded-lg flex flex-col items-center justify-center hover:bg-gray-300 transition-colors duration-150">
               <span className="text-lg font-bold">Name</span>
               {tripsLoading ? (
-                <span className="text-6xl font-bold">Loading...</span>
+                <span className="text-3xl md:text-6xl font-bold tracking-tighter">
+                  Loading...
+                </span>
               ) : (
-                <span className="text-6xl font-bold tracking-tighter">
+                <span className="text-3xl md:text-6xl font-bold tracking-tighter">
                   {getUpcomingTrip(trips)?.name.length! > 12
                     ? getUpcomingTrip(trips)?.name.substring(0, 12) + "..."
                     : getUpcomingTrip(trips)?.name || "No upcoming trip"}
@@ -70,9 +72,9 @@ const HomePage = () => {
       </div>
 
       <div className="mt-8 mb-4 flex flex-col">
-        <p className="text-secondary font-bold md:w-6/12 text-2xl mb-4">
+        <h3 className="text-secondary font-bold text-2xl mb-4">
           Get started with TripArchitect:
-        </p>
+        </h3>
         <HomePageFeature
           title="Create a Trip"
           description='Click the "Create Trip" button to start creating your trip'

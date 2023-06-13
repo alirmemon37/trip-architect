@@ -11,7 +11,7 @@ export default function Home() {
       </div>
       <div className="flex flex-col items-center">
         <h1 className="text-5xl md:text-7xl font-extrabold mb-10 text-center">
-          Trip Architect 🛠️
+          Trip Architect
         </h1>
         <p className="text-gray-600 text-xl max-w-xl text-center mb-4">
           Join the travel revolution with Trip Architect. Explore, connect, and
@@ -26,7 +26,7 @@ export default function Home() {
           </button>
         </Link>
       </div>
-      <footer className="flex flex-wrap w-full justify-between items-center max-w-7xl">
+      <footer className="flex flex-col md:flex-row w-full justify-between items-center max-w-7xl">
         <div className="flex text-lg font-medium items-center gap-2">
           Built by
           <Link

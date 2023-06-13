@@ -11,11 +11,15 @@ const AddNewPlaceMap = () => {
     setIsAddNewPlaceWithMapOpen,
     pickedPlace,
     setPickedPlace,
+    isMobileMapOpen,
+    setIsMobileMapOpen,
   ] = useAddNewPlaceWithMapStore((state) => [
     state.columnHeading,
     state.setIsAddNewPlaceWithMapOpen,
     state.pickedPlace,
     state.setPickedPlace,
+    state.isMobileMapOpen,
+    state.setIsMobileMapOpen,
   ]);
 
   const [trip, tripBoardColumns, setTripBoardColumns, updateTrip] =
@@ -26,9 +30,7 @@ const AddNewPlaceMap = () => {
       state.updateTrip,
     ]);
 
-  const geocodingControl = useMapStore(
-    (state) => state.geocodingControl
-  );
+  const geocodingControl = useMapStore((state) => state.geocodingControl);
 
   // add place to trip (when user wants to add the place to the trip)
   const handleAddPlace = async () => {
@@ -63,18 +65,30 @@ const AddNewPlaceMap = () => {
     // local state update
     setTripBoardColumns(updatedColumns);
     setPickedPlace(null);
+    setIsMobileMapOpen(false);
     geocodingControl?.setQuery("");
   };
 
   return (
-    <>
-      <div className="z-40 absolute top-4 left-4 flex flex-col items-center lg:flex-row gap-2">
+    <div
+      className={`${
+        isMobileMapOpen
+          ? "fixed top-[76px] left-0 z-30 w-full h-[calc(100vh-152px)] transition-all duration-300"
+          : ""
+      }`}
+    >
+      <div
+        className={`z-40 absolute flex items-center gap-2 ${
+          isMobileMapOpen ? "bottom-2 left-4" : ""
+        }`}
+      >
         <button
           onClick={() => {
             setIsAddNewPlaceWithMapOpen(false);
             setPickedPlace(null);
+            setIsMobileMapOpen(false);
           }}
-          className="p-1 rounded-full hover:bg-black/10"
+          className="p-1 rounded-full bg-black/20"
         >
           <XMarkIcon className="w-6 h-6" />
         </button>
@@ -90,7 +104,11 @@ const AddNewPlaceMap = () => {
         )}
       </div>
       {pickedPlace && (
-        <div className="z-40 absolute bottom-4 left-4">
+        <div
+          className={`z-40 absolute ${
+            isMobileMapOpen ? "bottom-12 left-4" : "bottom-4 left-4"
+          }`}
+        >
           <button
             onClick={handleAddPlace}
             className="bg-blue-500 rounded-lg px-6 py-2.5 font-bold text-white"
@@ -100,7 +118,7 @@ const AddNewPlaceMap = () => {
         </div>
       )}
       <Map />
-    </>
+    </div>
   );
 };
 

@@ -14,7 +14,7 @@ const Trips = () => {
     state.tripsLoading,
   ]);
 
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
     const fetchTrips = async () => {
@@ -42,15 +42,22 @@ const Trips = () => {
           </div>
         </>
       ) : (
-        trips.map((trip) => (
-          <Trip
-            key={trip.$id}
-            trip={trip}
-            onTripClick={() => {
-              router.push(`/app/trip/${trip.$id}`);
-            }}
-          />
-        ))
+        <>
+          {trips.length === 0 && (
+            <span className="flex md:hidden text-lg font-medium">
+              No trips found. Create a trip by clicking the &quot;+&quot; button
+            </span>
+          )}
+          {trips.map((trip) => (
+            <Trip
+              key={trip.$id}
+              trip={trip}
+              onTripClick={() => {
+                router.push(`/app/trip/${trip.$id}`);
+              }}
+            />
+          ))}
+        </>
       )}
     </>
   );
