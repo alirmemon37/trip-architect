@@ -9,6 +9,7 @@ import { Menu, Transition } from "@headlessui/react";
 import { useRouter } from "next/navigation";
 import { useCreateTripModalStore } from "@/store/CreateTripModalStore";
 import UserAvatar from "./UserAvatar";
+import CreateTripButton from "./CreateTripButton";
 
 const AppNavbar = () => {
   const [user, logout] = useUserStore((state) => [state.user, state.logout]);
@@ -21,9 +22,9 @@ const AppNavbar = () => {
   const router = useRouter();
 
   return (
-    <nav className="w-full flex flex-row items-center px-4 py-4 gap-4 fixed top-0 left-0 right-0 z-40 bg-gray-100">
+    <nav className="w-full flex flex-row items-center px-4 py-4 gap-4 fixed top-0 left-0 right-0 z-40 bg-gray-100 h-[76px]">
       <div
-        className="hidden md:flex cursor-pointer"
+        className="flex cursor-pointer"
         onClick={() => setView("home")}
       >
         <span className="text-xl font-bold tracking-tighter">
@@ -31,30 +32,7 @@ const AppNavbar = () => {
         </span>
       </div>
       <div className="flex items-center flex-1 space-x-5 justify-end w-full">
-        <form className="flex items-center space-x-3 bg-white p-2 flex-1 md:flex-initial border-2 border-gray-300 rounded-full ">
-          <MagnifyingGlassIcon className="h-6 w-6 text-gray-400" />
-          <input
-            type="text"
-            placeholder="Where to?"
-            className="outline-none flex-1"
-          />
-          <button type="submit" hidden>
-            Search
-          </button>
-        </form>
-        <div
-          onClick={() => {
-            if (view == "trips") {
-              openModal();
-              return;
-            }
-            setView("trips");
-          }}
-          title="Create new Trip"
-          className="p-2 hover:bg-white/50 rounded-full cursor-pointer transition-colors duration-300"
-        >
-          <PlusIcon className="h-6 w-6 text-gray-700" />
-        </div>
+        <CreateTripButton />
         <Menu as="div" className="relative inline-block">
           <div>
             <Menu.Button className="w-10 h-10 flex items-center space-x-2 rounded-full">

@@ -38,12 +38,6 @@ const MapPage = () => {
     });
     setMarkers([]);
 
-    // if no places, return
-    if (trip?.places.length === 0) {
-      alert("No places added to this trip yet!");
-      return;
-    }
-
     // get valid dates
     const validDates = getValidDates(trip.startDate, trip?.endDate);
 
@@ -72,6 +66,10 @@ const MapPage = () => {
       },
       []
     );
+
+    if (newMarkers.length === 0) {
+      alert("No places added to this trip yet!");
+    }
 
     setMarkers(newMarkers);
   };

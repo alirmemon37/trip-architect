@@ -9,38 +9,26 @@ interface Trip {
   name: string;
   startDate: Date;
   endDate: Date;
-  // places: Place[];
   $createdAt: string;
   $updatedAt: string;
   image: string;
-  places?: any;
+  places: string[];
 }
 
 interface TripBoard {
-  // $id: string;
-  // name: string;
   columns: TripBoardColumn[];
-  // $createdAt: string;
-  // $updatedAt: string;
 }
 
 interface TripBoardColumn {
-  // $id: string;
   heading: string;
   cards: TripBoardCard[];
-  // $createdAt: string;
-  // $updatedAt: string;
 }
 
 interface TripBoardCard {
-  // $id: string;
   name: string;
   lng?: number;
   lat?: number;
   countryName?: string;
-  // description: string;
-  // $createdAt: string;
-  // $updatedAt: string;
 }
 
 interface Place {
