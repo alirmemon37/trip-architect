@@ -7,11 +7,11 @@ interface MapStore {
   setMap: (map: maplibregl.Map) => void;
 
   geocodingControl: GeocodingControl | null;
-  setGeocodingControl: (geocodingControl: GeocodingControl | null) => void;
+  setGeocodingControl: (geocodingControl: GeocodingControl) => void;
 
   navigationControl: maplibregl.NavigationControl | null;
   setNavigationControl: (
-    navigationControl: maplibregl.NavigationControl | null
+    navigationControl: maplibregl.NavigationControl
   ) => void;
 
   mapMarker: maplibregl.Marker | null;
@@ -23,11 +23,11 @@ export const useMapStore = create<MapStore>((set) => ({
   setMap: (map: maplibregl.Map) => set({ map }),
 
   geocodingControl: null,
-  setGeocodingControl: (geocodingControl: GeocodingControl | null) =>
+  setGeocodingControl: (geocodingControl: GeocodingControl) =>
     set({ geocodingControl }),
 
   navigationControl: null,
-  setNavigationControl: (navigationControl: maplibregl.NavigationControl | null) =>
+  setNavigationControl: (navigationControl: maplibregl.NavigationControl) =>
     set({ navigationControl }),
 
   mapMarker: null,

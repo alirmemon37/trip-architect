@@ -16,9 +16,11 @@ const TripBoardCard = ({
   id: string;
   columnHeading: string;
 }) => {
-  const [setIsAddNewPlaceWithMapOpen, setIsMobileMapOpen] = useAddNewPlaceWithMapStore(
-    (state) => [state.setIsAddNewPlaceWithMapOpen, state.setIsMobileMapOpen]
-  );
+  const [setIsAddNewPlaceWithMapOpen, setIsMobileMapOpen] =
+    useAddNewPlaceWithMapStore((state) => [
+      state.setIsAddNewPlaceWithMapOpen,
+      state.setIsMobileMapOpen,
+    ]);
 
   const [map, mapMarker, setMapMarker] = useMapStore((state) => [
     state.map,

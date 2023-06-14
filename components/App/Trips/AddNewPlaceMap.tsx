@@ -1,9 +1,10 @@
-import React from "react";
-import Map from "../Map/Map";
+import React, { useEffect, useRef } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useAddNewPlaceWithMapStore } from "@/store/AddNewPlaceWithMapStore";
 import { useTripStore } from "@/store/TripStore";
-import { useMapStore } from "@/store/MapStore";
+import maplibregl from "maplibre-gl";
+import { GeocodingControl } from "@maptiler/geocoding-control/maplibregl";
+import { countryNameFromCode } from "@/utils/countryNameFromCode";
 
 const AddNewPlaceMap = () => {
   const [
@@ -30,15 +31,78 @@ const AddNewPlaceMap = () => {
       state.updateTrip,
     ]);
 
-  const [
-    geocodingControl,
-    setGeocodingControl,
-    setNavigationControl,
-  ] = useMapStore((state) => [
-    state.geocodingControl,
-    state.setGeocodingControl,
-    state.setNavigationControl,
-  ]);
+  const mapContainerRef = useRef<HTMLDivElement>(null);
+
+  const apiKey = process.env.NEXT_PUBLIC_MAPTILER_API_KEY!;
+
+  // pick event handler (when user clicks a place from the search results)
+  const handlePickEvent = (event: Event) => {
+    // @ts-ignore
+    const eventDetails = event.detail;
+    if (!eventDetails) return;
+
+    const placeName = eventDetails.place_name;
+    const countryCode = eventDetails.properties.country_code;
+    if (eventDetails.geometry.type === "Point") {
+      // if the event is a point, use the coordinates from the event
+      const [longitude, latitude] = eventDetails.geometry.coordinates;
+      setPickedPlace({
+        name: placeName,
+        lng: longitude as number,
+        lat: latitude as number,
+        countryName: countryNameFromCode[countryCode.toUpperCase()],
+      });
+    } else {
+      // if the event is a polygon, use the center coordinates from the event
+      const [longitude, latitude] = eventDetails.center;
+      setPickedPlace({
+        name: placeName,
+        lng: longitude as number,
+        lat: latitude as number,
+        countryName: countryNameFromCode[countryCode.toUpperCase()],
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (!mapContainerRef.current) {
+      return;
+    }
+
+    const map = new maplibregl.Map({
+      style: "https://api.maptiler.com/maps/streets/style.json?key=" + apiKey,
+      container: mapContainerRef.current,
+    });
+
+    // map navigation control
+    const navControl = new maplibregl.NavigationControl();
+    map?.addControl(navControl, "bottom-right");
+
+    // map geolocation control
+    const gc = new GeocodingControl({
+      apiKey,
+      // @ts-ignore
+      maplibregl,
+      types: [
+        "county",
+        "municipality",
+        "municipal_district",
+        "locality",
+        "neighbourhood",
+        "place",
+      ],
+      minLength: 3,
+      fuzzyMatch: true,
+      limit: 5,
+      autoComplete: false,
+    });
+    map?.addControl(gc);
+
+    // add event listener for when user clicks a place from the search results
+    gc?.addEventListener("pick", handlePickEvent);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // add place to trip (when user wants to add the place to the trip)
   const handleAddPlace = async () => {
@@ -73,8 +137,8 @@ const AddNewPlaceMap = () => {
     // local state update
     setTripBoardColumns(updatedColumns);
     setPickedPlace(null);
-    setIsMobileMapOpen(false);
-    geocodingControl?.setQuery("");
+    // setIsMobileMapOpen(false);
+    // geocodingControl?.setQuery("");
   };
 
   return (
@@ -97,8 +161,6 @@ const AddNewPlaceMap = () => {
             setIsAddNewPlaceWithMapOpen(false);
             setPickedPlace(null);
             setIsMobileMapOpen(false);
-            setGeocodingControl(null);
-            setNavigationControl(null);
           }}
           className="p-1 rounded-full bg-black/20"
         >
@@ -120,7 +182,7 @@ const AddNewPlaceMap = () => {
           className={`z-40 absolute ${
             isMobileMapOpen
               ? "bottom-12 left-4 md:bottom-4 md:left-4"
-              : "bottom-4 left-4"
+              : "md:bottom-4 md:left-4"
           }`}
         >
           <button
@@ -131,7 +193,9 @@ const AddNewPlaceMap = () => {
           </button>
         </div>
       )}
-      <Map />
+      <div className="relative w-full h-full">
+        <div ref={mapContainerRef} className="w-full h-[calc(100vh-76px)]" />
+      </div>
     </div>
   );
 };
