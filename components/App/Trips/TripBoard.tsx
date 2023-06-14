@@ -2,14 +2,8 @@ import React from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import TripBoardColumn from "./TripBoardColumn";
 import { useTripStore } from "@/store/TripStore";
-import AddNewPlaceModal from "./AddNewPlaceModal";
 import { useAddNewPlaceWithMapStore } from "@/store/AddNewPlaceWithMapStore";
 import clsx from "clsx";
-
-interface TripBoardProps {
-  tripBoardColumns: TripBoardColumn[];
-  setTripColumns: React.Dispatch<React.SetStateAction<TripBoardColumn[]>>;
-}
 
 const TripBoard = () => {
   const [trip, updateTrip, tripBoardColumns, setTripBoardColumns] =
@@ -156,7 +150,6 @@ const TripBoard = () => {
           ))}
         </div>
       </DragDropContext>
-      <AddNewPlaceModal />
     </div>
   );
 };

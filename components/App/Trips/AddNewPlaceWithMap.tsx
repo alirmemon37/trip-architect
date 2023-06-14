@@ -11,9 +11,11 @@ import AddNewPlaceMap from "./AddNewPlaceMap";
 import { useAddNewPlaceWithMapStore } from "@/store/AddNewPlaceWithMapStore";
 
 const AddNewPlaceWithMap = () => {
-  const [setPickedPlace, isMobileMapOpen, setIsMobileMapOpen] = useAddNewPlaceWithMapStore(
-    (state) => [state.setPickedPlace, state.isMobileMapOpen, state.setIsMobileMapOpen]
-  );
+  const [setPickedPlace, isMobileMapOpen] =
+    useAddNewPlaceWithMapStore((state) => [
+      state.setPickedPlace,
+      state.isMobileMapOpen,
+    ]);
 
   const [
     map,
@@ -107,22 +109,16 @@ const AddNewPlaceWithMap = () => {
 
   return (
     <>
-      <div className="hidden md:grid grid-cols-3">
+      <div className="flex md:grid grid-cols-3">
         <div className="flex flex-col gap-4 w-full h-[calc(100vh-76px)] overflow-scroll shadow-lg z-10">
           <TripPageHeader />
           <TripBoard />
         </div>
-        <div className="relative col-span-2">
-          <AddNewPlaceMap />
-        </div>
-      </div>
-
-      <div className="flex md:hidden">
-        <div className="flex flex-col gap-4 w-full h-[calc(100vh-76px)] overflow-scroll shadow-lg z-10">
-          <TripPageHeader />
-          <TripBoard />
-        </div>
-        <div className={`${isMobileMapOpen ? "flex" : "hidden"}`}>
+        <div
+          className={`md:relative md:col-span-2 ${
+            isMobileMapOpen ? "flex md:hiden" : "hidden md:flex"
+          }`}
+        >
           <AddNewPlaceMap />
         </div>
       </div>

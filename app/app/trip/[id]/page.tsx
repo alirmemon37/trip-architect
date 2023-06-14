@@ -19,21 +19,20 @@ interface TripPageProps {
 
 const TripPage: FC<TripPageProps> = ({ params }) => {
   const { id: tripId } = params;
-  const [
-    trip,
-    tripLoading,
-    getTripById,
-    setTripBoardColumns,
-  ] = useTripStore((state) => [
-    state.trip,
-    state.tripLoading,
-    state.getTripById,
-    state.setTripBoardColumns,
-  ]);
-  const setView = useAppViewStore((state) => state.setView);
-  const isAddNewPlaceWithMapOpen = useAddNewPlaceWithMapStore(
-    (state) => state.isAddNewPlaceWithMapOpen
+  const [trip, tripLoading, getTripById, setTripBoardColumns] = useTripStore(
+    (state) => [
+      state.trip,
+      state.tripLoading,
+      state.getTripById,
+      state.setTripBoardColumns,
+    ]
   );
+  const setView = useAppViewStore((state) => state.setView);
+  const [isAddNewPlaceWithMapOpen, setIsMobileMapOpen] =
+    useAddNewPlaceWithMapStore((state) => [
+      state.isAddNewPlaceWithMapOpen,
+      state.setIsMobileMapOpen,
+    ]);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -50,6 +49,10 @@ const TripPage: FC<TripPageProps> = ({ params }) => {
     getTripColumns(trip!);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [trip]);
+
+  useEffect(() => {
+    setIsMobileMapOpen(false);
+  }, []);
 
   function getTripColumns(trip: Trip) {
     if (!trip) return;

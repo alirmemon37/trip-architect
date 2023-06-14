@@ -31,6 +31,10 @@ const MapPage = () => {
     fetchTrips();
   }, [getTrips, userId]);
 
+  useEffect(() => {
+    setShowMap(false);
+  }, []);
+
   const handleTripClick = (trip: Trip) => {
     if (!trip) return;
 
@@ -109,13 +113,13 @@ const MapPage = () => {
   return (
     <>
       {/* desktop */}
-      <div className="hidden md:block relative overflow-hidden">
-        <div className="grid grid-cols-3">
-          <div className="flex flex-col gap-4 w-full h-[calc(100vh-76px)] overflow-scroll shadow-lg z-10">
-            <h1 className="text-4xl font-extrabold mb-4 px-4 pt-6">
+      <div className="flex mt-4 mb-20 md:m-0 md:block relative overflow-hidden">
+        <div className="flex w-full md:grid grid-cols-3">
+          <div className="flex flex-col gap-4 w-full md:h-[calc(100vh-76px)] overflow-scroll md:shadow-lg z-10">
+            <h1 className="text-4xl font-extrabold mb-4 md:px-4 md:pt-6">
               Your Trips
             </h1>
-            <div className="px-4 py-2">
+            <div className="md:px-4 md:py-2">
               {!tripsLoading && trips.length === 0 ? (
                 <CreateTrip />
               ) : (
@@ -131,14 +135,33 @@ const MapPage = () => {
               )}
             </div>
           </div>
-          <div className="relative col-span-2 w-full">
+          <div
+            className={`md:relative md:col-span-2 w-full fixed top-[76px] left-0 md:top-auto md:left-auto z-30 h-[calc(100vh-152px)] transition-all duration-300 ${
+              showMap ? "flex" : "hidden md:flex"
+            }`}
+          >
             <Map />
+          </div>
+
+          <div
+            className={`z-40 fixed top-[90px] left-4 transition-all duration-500 ${
+              showMap ? "flex md:hidden" : "hidden"
+            }`}
+          >
+            <button
+              onClick={() => {
+                setShowMap(false);
+              }}
+              className="p-1 rounded-full bg-black/20"
+            >
+              <XMarkIcon className="w-6 h-6" />
+            </button>
           </div>
         </div>
       </div>
 
       {/* mobile */}
-      <div className="relative flex md:hidden mt-4 mb-20">
+      {/* <div className="relative flex md:hidden mt-4 mb-20">
         <div className="flex flex-col gap-4 w-full z-10">
           <h1 className="text-4xl font-extrabold mb-4">Your Trips</h1>
           <div>
@@ -160,7 +183,7 @@ const MapPage = () => {
 
         <div
           className={`fixed top-[76px] left-0 z-30 w-full h-[calc(100vh-152px)] transition-all duration-300 ${
-            showMap ? "flex" : "hidden"
+            showMap ? "flex md:hidden" : "hidden"
           }`}
         >
           <Map />
@@ -168,7 +191,7 @@ const MapPage = () => {
 
         <div
           className={`z-40 fixed top-[90px] left-4 transition-all duration-500 ${
-            showMap ? "flex" : "hidden"
+            showMap ? "flex md:hidden" : "hidden"
           }`}
         >
           <button
@@ -180,7 +203,7 @@ const MapPage = () => {
             <XMarkIcon className="w-6 h-6" />
           </button>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

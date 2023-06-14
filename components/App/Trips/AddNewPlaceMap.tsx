@@ -30,7 +30,15 @@ const AddNewPlaceMap = () => {
       state.updateTrip,
     ]);
 
-  const geocodingControl = useMapStore((state) => state.geocodingControl);
+  const [
+    geocodingControl,
+    setGeocodingControl,
+    setNavigationControl,
+  ] = useMapStore((state) => [
+    state.geocodingControl,
+    state.setGeocodingControl,
+    state.setNavigationControl,
+  ]);
 
   // add place to trip (when user wants to add the place to the trip)
   const handleAddPlace = async () => {
@@ -73,13 +81,15 @@ const AddNewPlaceMap = () => {
     <div
       className={`${
         isMobileMapOpen
-          ? "fixed top-[76px] left-0 z-30 w-full h-[calc(100vh-152px)] transition-all duration-300"
+          ? "fixed top-[76px] md:relative md:top-0 left-0 z-30 w-full h-[calc(100vh-152px)] transition-all duration-300"
           : ""
       }`}
     >
       <div
         className={`z-40 absolute flex items-center gap-2 ${
-          isMobileMapOpen ? "bottom-2 left-4" : ""
+          isMobileMapOpen
+            ? "bottom-2 left-4 md:bottom-auto md:top-4 md:left-4"
+            : "top-4 left-4"
         }`}
       >
         <button
@@ -87,6 +97,8 @@ const AddNewPlaceMap = () => {
             setIsAddNewPlaceWithMapOpen(false);
             setPickedPlace(null);
             setIsMobileMapOpen(false);
+            setGeocodingControl(null);
+            setNavigationControl(null);
           }}
           className="p-1 rounded-full bg-black/20"
         >
@@ -106,7 +118,9 @@ const AddNewPlaceMap = () => {
       {pickedPlace && (
         <div
           className={`z-40 absolute ${
-            isMobileMapOpen ? "bottom-12 left-4" : "bottom-4 left-4"
+            isMobileMapOpen
+              ? "bottom-12 left-4 md:bottom-4 md:left-4"
+              : "bottom-4 left-4"
           }`}
         >
           <button
