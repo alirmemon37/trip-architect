@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { useCreateTripModalStore } from "@/store/CreateTripModalStore";
 import UserAvatar from "./UserAvatar";
 import CreateTripButton from "./CreateTripButton";
+import Image from "next/image";
 
 const AppNavbar = () => {
   const [user, logout] = useUserStore((state) => [state.user, state.logout]);
@@ -24,11 +25,19 @@ const AppNavbar = () => {
   return (
     <nav className="w-full flex flex-row items-center px-4 py-4 gap-4 fixed top-0 left-0 right-0 z-40 bg-gray-100 h-[76px]">
       <div
-        className="flex cursor-pointer"
+        className="flex gap-1 cursor-pointer items-center"
         onClick={() => setView("home")}
       >
-        <span className="text-xl font-bold tracking-tighter">
-          🛠️ TripArchitect
+        <div>
+          <Image
+            src="/hammer-and-wrench.png"
+            width={20}
+            height={20}
+            alt="hammer and wrench emoji"
+          />
+        </div>
+        <span className="flex text-xl font-bold tracking-tighter relative">
+          TripArchitect
         </span>
       </div>
       <div className="flex items-center flex-1 space-x-5 justify-end w-full">

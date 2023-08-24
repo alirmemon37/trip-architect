@@ -6,8 +6,13 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="relative flex flex-col items-center justify-between h-screen p-4">
-      <div className="flex w-full justify-between max-w-7xl">
-        <span className="text-5xl">🛠️</span>
+      <div className="flex w-full max-w-7xl">
+        <Image
+          src="/hammer-and-wrench.png"
+          height={48}
+          width={48}
+          alt="hammer and wrench emoji"
+        />
       </div>
       <div className="flex flex-col items-center">
         <h1 className="text-5xl md:text-7xl font-extrabold mb-10 text-center">

@@ -4,6 +4,7 @@ import { AppwriteException } from "appwrite";
 import { useRouter } from "next/navigation";
 import { Dispatch, FC, FormEvent, SetStateAction, useState } from "react";
 import LoginPageImage from "./LoginPageImage";
+import Image from "next/image";
 
 const SignUp: FC<{ setRegister: Dispatch<SetStateAction<boolean>> }> = ({
   setRegister,
@@ -37,7 +38,15 @@ const SignUp: FC<{ setRegister: Dispatch<SetStateAction<boolean>> }> = ({
     <>
       <section className="h-screen mx-auto grid md:grid-cols-9">
         <div className="col-span-5 md:justify-self-center flex-grow flex flex-col md:max-w-xl md:justify-center py-4 px-8 md:pl-16 md:pr-8">
-          <span className="text-2xl mb-16 md:hidden tracking-tighter font-bold">🛠️ TripArchitect</span>
+          <div className="text-2xl mb-16 md:hidden tracking-tighter font-bold flex gap-1 items-center">
+            <Image
+              src="/hammer-and-wrench.png"
+              width={24}
+              height={24}
+              alt="hammer and wrench emoji"
+            />
+            TripArchitect
+          </div>
           <h1 className="text-5xl md:text-6xl font-bold">Hey, hello 👋</h1>
           <p className="text-gray-500 mt-2 text-lg">
             Discover the World with TripArchitect🛠️, Just One Step Away from
